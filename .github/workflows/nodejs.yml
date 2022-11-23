@@ -1,8 +1,10 @@
-name: Node.js Reference Test
+name: notion build
 
 on:
   push:
-
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
 jobs:
   build:
     runs-on: ubuntu-latest
