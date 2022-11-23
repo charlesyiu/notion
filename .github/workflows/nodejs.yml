@@ -18,7 +18,7 @@ jobs:
         run: |
           git config --global user.name 'notion builder'
           git config --global user.email 'me@yiu.ch'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.TOKEN }}@github.com/${{ github.repository }}
           git commit -am "generated notion pages" && git push || echo "no changes to commit"
         env:
           CI: true
