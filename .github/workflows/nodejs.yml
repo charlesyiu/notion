@@ -1,11 +1,6 @@
 name: notion build
 
-on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
-  workflow_dispatch:
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,9 +9,16 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "16"
-      - name: Generate the test blog
+      - name: generate notion pages
         run: |
           npm i -g notablog
           notablog generate .
+              - name: Commit update
+      - name: update repo
+        run: |
+          git config --global user.name 'notion builder'
+          git config --global user.email 'me@yiu.ch'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "generated notion pages" && git push || echo "no changes to commit"
         env:
           CI: true
